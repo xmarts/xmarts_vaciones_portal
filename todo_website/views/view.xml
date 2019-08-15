@@ -1,0 +1,75 @@
+<odoo>
+<template id="portal_my_home_vacation" name="Portal My Home : invoice entries" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Vacaciones</t>
+                <t t-set="url" t-value="'/vacation'"/>
+                <t t-set="count" t-value="hr_leaves_conunt"/>
+            </t>
+        </xpath>
+    </template>
+
+      
+
+       <template id="portal_my_vacation" name="Vacaciones">
+      <t t-call="portal.portal_layout">
+   
+      <t t-call="portal.portal_table">
+            <thead>
+                <tr class="active">
+                    <th>Descripcion #</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                   
+                  
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="vacations" t-as="vac">
+                    <tr>
+                        <td>
+                           <a t-att-href="vac.get_portal()" t-att-title="vac.name">
+                                <t t-esc="vac.name" t-if="vac.name"/>
+                                <em t-else="">Draft Invoice</em>
+                            </a>
+                        </td>
+                        <td class='d-none d-md-table-cell'><span t-field="vac.holiday_status_id"/></td>
+                         <td class='d-none d-md-table-cell'><span t-field="vac.state"/></td>
+                         <td class='d-none d-md-table-cell'> <form action="/confirm" method="post">
+                            <input type="integer" style="display: none;" class="form-control" id="reg_id_auto" name="reg_id_auto" t-att-value="vac.id"/>
+                         <input type="submit" class="btn btn-info" value="Confirmar" />
+                            </form></td>
+                        
+                    
+                        <!-- <td class="tx_status">
+                            <t t-if="invoice.state == 'open'">
+                                <span class="badge badge-pill badge-info"><i class="fa fa-fw fa-clock-o" aria-label="Opened" title="Opened" role="img"></i><span class="d-none d-md-inline"> Waiting for Payment</span></span>
+                            </t>
+                            <t t-if="invoice.state == 'paid'">
+                                <span class="badge badge-pill badge-success"><i class="fa fa-fw fa-check" aria-label="Paid" title="Paid" role="img"></i><span class="d-none d-md-inline"> Paid</span></span>
+                            </t>
+                            <t t-if="invoice.state == 'cancel'">
+                                <span class="badge badge-pill badge-warning"><i class="fa fa-fw fa-remove" aria-label="Cancelled" title="Cancelled" role="img"></i><span class="d-none d-md-inline"> Cancelled</span></span>
+                            </t>
+                        </td>
+                        <td class="text-right"><span t-esc="-invoice.residual if invoice.type == 'out_refund' else invoice.residual" t-options='{"widget": "monetary", "display_currency": invoice.currency_id}'/></td> -->
+                    </tr>
+                </t>
+            </tbody>
+        </t>
+         <form action="/todo/add">
+                         <input type="submit" class="btn btn-primary" value="Crear Solicitud" />
+                            </form>
+      </t>
+    </template>
+    <template id="submitsli" name="Successfully">
+    <t t-call="website.layout">
+      <div class="oe_structure">
+          <div class="container">
+              <center><h3>Tu proceso fue exitoso!!!</h3></center>
+          </div>
+      </div>
+    </t>
+  </template>
+   
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="menu_todo" model="website.menu">
+      <field name="name">Todo</field>
+      <field name="url">/todos</field>
+      <field name="parent_id" ref="website.main_menu"/>
+      <field name="sequence" type="int">50</field>
+    </record>
+
+    <record id="todo_website.model_hr_vacations" model="ir.model">      
+    <field name="website_form_access">True</field>
+    <field name="website_form_label">vacaciones</field>
+    </record>
+
+
+    <function model="ir.model.fields" name="formbuilder_whitelist">
+      <value>hr.vacations</value>
+      <value eval="[
+        'date_to',
+        'name',
+        'date_from',
+        'holiday_status_id',
+        'user_id',
+        'employee_id',
+        'number_of_days',
+        'holiday_type',
+        'department_id',
+        'state',
+        'request_date_from',
+        'request_date_to',
+      ]"/>
+    </function>
+
+    <data noupdate="1">
+        <record id="action_open_website" model="ir.actions.act_url">
+            <field name="name">Website Contact Form</field>
+            <field name="target">self</field>
+            <field name="url">/contactus</field>
+        </record>
+
+        <record id="base.open_menu" model="ir.actions.todo">
+            <field name="action_id" ref="action_open_website"/>
+            <field name="state">open</field>
+        </record>
+    </data>
+
+</odoo>
