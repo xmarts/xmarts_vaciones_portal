@@ -32,5 +32,11 @@ class Todo(http.Controller):
                 value = {
                     'values':auto_obj,
                 }
-                auto_obj.action_confirm()
+                
+                try:
+                    auto_obj.action_confirm()
+                except Exception as e:
+                    raise e
+                finally:
+                    pass
                 return http.request.render('todo_website.submitsli')
